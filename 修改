@@ -1,0 +1,430 @@
+/*==============================================================*/
+/* DBMS name:      Sybase SQL Anywhere 11                       */
+/* Created on:     2018/12/31 15:45:16                          */
+/*==============================================================*/
+
+
+if exists(select 1 from sys.sysforeignkey where role='FK_AU_AU_ADDRESS') then
+    alter table AU
+       delete foreign key FK_AU_AU_ADDRESS
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_AU_AU2_USER') then
+    alter table AU
+       delete foreign key FK_AU_AU2_USER
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_ADD_ADD2_SHOPPING') then
+    alter table "Add"
+       delete foreign key FK_ADD_ADD2_SHOPPING
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_ADD_ADD3_PRODUCT') then
+    alter table "Add"
+       delete foreign key FK_ADD_ADD3_PRODUCT
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_BS_BS_BRAND') then
+    alter table BS
+       delete foreign key FK_BS_BS_BRAND
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_BS_BS2_STORE') then
+    alter table BS
+       delete foreign key FK_BS_BS2_STORE
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_BELONG_BELONG_PRODUCT') then
+    alter table Belong
+       delete foreign key FK_BELONG_BELONG_PRODUCT
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_BELONG_BELONG2_STORE') then
+    alter table Belong
+       delete foreign key FK_BELONG_BELONG2_STORE
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_CARE_CARE_STORE') then
+    alter table Care
+       delete foreign key FK_CARE_CARE_STORE
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_CARE_CARE2_USER') then
+    alter table Care
+       delete foreign key FK_CARE_CARE2_USER
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_ORDER_AO_ADDRESS') then
+    alter table "Order"
+       delete foreign key FK_ORDER_AO_ADDRESS
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_ORDER_OU_USER') then
+    alter table "Order"
+       delete foreign key FK_ORDER_OU_USER
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_PO_PO_PRODUCT') then
+    alter table PO
+       delete foreign key FK_PO_PO_PRODUCT
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_PO_PO2_ORDER') then
+    alter table PO
+       delete foreign key FK_PO_PO2_ORDER
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_SHOPPING_ADD_USER') then
+    alter table Shopping_car
+       delete foreign key FK_SHOPPING_ADD_USER
+end if;
+
+if exists(
+   select 1 from sys.systable 
+   where table_name='AU'
+     and table_type in ('BASE', 'GBL TEMP')
+) then
+    drop table AU
+end if;
+
+if exists(
+   select 1 from sys.systable 
+   where table_name='Add'
+     and table_type in ('BASE', 'GBL TEMP')
+) then
+    drop table "Add"
+end if;
+
+if exists(
+   select 1 from sys.systable 
+   where table_name='Address'
+     and table_type in ('BASE', 'GBL TEMP')
+) then
+    drop table Address
+end if;
+
+if exists(
+   select 1 from sys.systable 
+   where table_name='BS'
+     and table_type in ('BASE', 'GBL TEMP')
+) then
+    drop table BS
+end if;
+
+if exists(
+   select 1 from sys.systable 
+   where table_name='Belong'
+     and table_type in ('BASE', 'GBL TEMP')
+) then
+    drop table Belong
+end if;
+
+if exists(
+   select 1 from sys.systable 
+   where table_name='Brand'
+     and table_type in ('BASE', 'GBL TEMP')
+) then
+    drop table Brand
+end if;
+
+if exists(
+   select 1 from sys.systable 
+   where table_name='Care'
+     and table_type in ('BASE', 'GBL TEMP')
+) then
+    drop table Care
+end if;
+
+if exists(
+   select 1 from sys.systable 
+   where table_name='Order'
+     and table_type in ('BASE', 'GBL TEMP')
+) then
+    drop table "Order"
+end if;
+
+if exists(
+   select 1 from sys.systable 
+   where table_name='PO'
+     and table_type in ('BASE', 'GBL TEMP')
+) then
+    drop table PO
+end if;
+
+if exists(
+   select 1 from sys.systable 
+   where table_name='Product'
+     and table_type in ('BASE', 'GBL TEMP')
+) then
+    drop table Product
+end if;
+
+if exists(
+   select 1 from sys.systable 
+   where table_name='Shopping_car'
+     and table_type in ('BASE', 'GBL TEMP')
+) then
+    drop table Shopping_car
+end if;
+
+if exists(
+   select 1 from sys.systable 
+   where table_name='Store'
+     and table_type in ('BASE', 'GBL TEMP')
+) then
+    drop table Store
+end if;
+
+if exists(
+   select 1 from sys.systable 
+   where table_name='User'
+     and table_type in ('BASE', 'GBL TEMP')
+) then
+    drop table "User"
+end if;
+
+/*==============================================================*/
+/* Table: AU                                                    */
+/*==============================================================*/
+create table AU 
+(
+   Address              varchar(100)                   not null,
+   Consignee            varchar(50)                    not null,
+   Nickname             varchar(50)                    not null,
+   constraint PK_AU primary key (Address, Consignee, Nickname)
+);
+
+/*==============================================================*/
+/* Table: "Add"                                                 */
+/*==============================================================*/
+create table "Add" 
+(
+   Shopping_carid       char(20)                       not null,
+   Productid            char(20)                       not null,
+   Color                varchar(10)                    not null,
+   Size                 integer                        not null,
+   constraint PK_ADD primary key (Shopping_carid, Productid, Color, Size)
+);
+
+/*==============================================================*/
+/* Table: Address                                               */
+/*==============================================================*/
+create table Address 
+(
+   Address              varchar(100)                   not null,
+   Consignee            varchar(50)                    not null,
+   Phone                char(20)                       not null,
+   constraint PK_ADDRESS primary key (Address, Consignee)
+);
+
+/*==============================================================*/
+/* Table: BS                                                    */
+/*==============================================================*/
+create table BS 
+(
+   Storeid              char(20)                       not null,
+   Brandid              char(20)                       not null,
+   constraint PK_BS primary key (Storeid, Brandid)
+);
+
+/*==============================================================*/
+/* Table: Belong                                                */
+/*==============================================================*/
+create table Belong 
+(
+   Storeid              char(20)                       not null,
+   Productid            char(20)                       not null,
+   Color                varchar(10)                    not null,
+   Size                 integer                        not null,
+   constraint PK_BELONG primary key (Storeid, Productid, Color, Size)
+);
+
+/*==============================================================*/
+/* Table: Brand                                                 */
+/*==============================================================*/
+create table Brand 
+(
+   Brandid              char(20)                       not null,
+   Brandname            varchar(50)                    not null,
+   constraint PK_BRAND primary key (Brandid)
+);
+
+/*==============================================================*/
+/* Table: Care                                                  */
+/*==============================================================*/
+create table Care 
+(
+   Nickname             varchar(50)                    not null,
+   Storeid              char(20)                       not null,
+   constraint PK_CARE primary key (Nickname, Storeid)
+);
+
+/*==============================================================*/
+/* Table: "Order"                                               */
+/*==============================================================*/
+create table "Order" 
+(
+   Orderid              char(20)                       not null,
+   Nickname             varchar(50)                    not null,
+   Consignee            varchar(50)                    not null,
+   Address              varchar(100)                   not null,
+   "Date"               timestamp                      not null,
+   Condition            char(20)                       null,
+   constraint PK_ORDER primary key (Orderid)
+);
+
+/*==============================================================*/
+/* Table: PO                                                    */
+/*==============================================================*/
+create table PO 
+(
+   Orderid              char(20)                       not null,
+   Productid            char(20)                       not null,
+   Color                varchar(10)                    not null,
+   Size                 integer                        not null,
+   constraint PK_PO primary key (Orderid, Productid, Color, Size)
+);
+
+/*==============================================================*/
+/* Table: Product                                               */
+/*==============================================================*/
+create table Product 
+(
+   Productid            char(20)                       not null,
+   Color                varchar(10)                    not null,
+   Size                 integer                        not null,
+   Productname          varchar(50)                    not null,
+   Postage              numeric(8,2)                   not null,
+   Weight               integer                        null,
+   Price                numeric(8,2)                   not null,
+   Iventory             integer                        not null,
+   "Comment"            integer                        not null,
+   Sales_volume         integer                        not null,
+   constraint PK_PRODUCT primary key (Productid, Color, Size)
+);
+
+/*==============================================================*/
+/* Table: Shopping_car                                          */
+/*==============================================================*/
+create table Shopping_car 
+(
+   Shopping_carid       char(20)                       not null,
+   Nickname             varchar(50)                    not null,
+   constraint PK_SHOPPING_CAR primary key (Shopping_carid)
+);
+
+/*==============================================================*/
+/* Table: Store                                                 */
+/*==============================================================*/
+create table Store 
+(
+   Storeid              char(20)                       not null,
+   Storename            varchar(50)                    not null,
+   constraint PK_STORE primary key (Storeid)
+);
+
+/*==============================================================*/
+/* Table: "User"                                                */
+/*==============================================================*/
+create table "User" 
+(
+   Nickname             varchar(50)                    not null,
+   Userid               char(20)                       not null,
+   Sex                  char(2)                        not null,
+   Password             char(20)                       not null,
+   QQid                 char(20)                       not null,
+   QQpassword           char(20)                       not null,
+   Wechatid             char(20)                       not null,
+   Wechatpassword       char(20)                       not null,
+   constraint PK_USER primary key (Nickname)
+);
+
+alter table AU
+   add constraint FK_AU_AU_ADDRESS foreign key (Address, Consignee)
+      references Address (Address, Consignee)
+      on update restrict
+      on delete restrict;
+
+alter table AU
+   add constraint FK_AU_AU2_USER foreign key (Nickname)
+      references "User" (Nickname)
+      on update restrict
+      on delete restrict;
+
+alter table "Add"
+   add constraint FK_ADD_ADD2_SHOPPING foreign key (Shopping_carid)
+      references Shopping_car (Shopping_carid)
+      on update restrict
+      on delete restrict;
+
+alter table "Add"
+   add constraint FK_ADD_ADD3_PRODUCT foreign key (Productid, Color, Size)
+      references Product (Productid, Color, Size)
+      on update restrict
+      on delete restrict;
+
+alter table BS
+   add constraint FK_BS_BS_BRAND foreign key (Brandid)
+      references Brand (Brandid)
+      on update restrict
+      on delete restrict;
+
+alter table BS
+   add constraint FK_BS_BS2_STORE foreign key (Storeid)
+      references Store (Storeid)
+      on update restrict
+      on delete restrict;
+
+alter table Belong
+   add constraint FK_BELONG_BELONG_PRODUCT foreign key (Productid, Color, Size)
+      references Product (Productid, Color, Size)
+      on update restrict
+      on delete restrict;
+
+alter table Belong
+   add constraint FK_BELONG_BELONG2_STORE foreign key (Storeid)
+      references Store (Storeid)
+      on update restrict
+      on delete restrict;
+
+alter table Care
+   add constraint FK_CARE_CARE_STORE foreign key (Storeid)
+      references Store (Storeid)
+      on update restrict
+      on delete restrict;
+
+alter table Care
+   add constraint FK_CARE_CARE2_USER foreign key (Nickname)
+      references "User" (Nickname)
+      on update restrict
+      on delete restrict;
+
+alter table "Order"
+   add constraint FK_ORDER_AO_ADDRESS foreign key (Address, Consignee)
+      references Address (Address, Consignee)
+      on update restrict
+      on delete restrict;
+
+alter table "Order"
+   add constraint FK_ORDER_OU_USER foreign key (Nickname)
+      references "User" (Nickname)
+      on update restrict
+      on delete restrict;
+
+alter table PO
+   add constraint FK_PO_PO_PRODUCT foreign key (Productid, Color, Size)
+      references Product (Productid, Color, Size)
+      on update restrict
+      on delete restrict;
+
+alter table PO
+   add constraint FK_PO_PO2_ORDER foreign key (Orderid)
+      references "Order" (Orderid)
+      on update restrict
+      on delete restrict;
+
+alter table Shopping_car
+   add constraint FK_SHOPPING_ADD_USER foreign key (Nickname)
+      references "User" (Nickname)
+      on update restrict
+      on delete restrict;
